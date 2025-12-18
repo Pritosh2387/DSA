@@ -1,0 +1,23 @@
+import matplotlib.pyplot as plt
+import networkx as nx
+G = nx.DiGraph()
+nodes = [1, 2, 3, 4, 5]
+G.add_nodes_from(nodes)
+G.add_edge(1, 2, weight=2)
+G.add_edge(1, 4, weight=1)
+G.add_edge(1, 5, weight=8)
+G.add_edge(2, 1, weight=6)
+G.add_edge(2, 3, weight=3)
+G.add_edge(2, 4, weight=2)
+G.add_edge(3, 4, weight=4)
+G.add_edge(4, 3, weight=2)
+G.add_edge(4, 5, weight=3)
+G.add_edge(5, 1, weight=3)
+pos = nx.circular_layout(G)
+plt.figure(figsize=(8, 6))
+nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=2000, font_size=15, font_weight='bold', arrowsize=20)
+edge_labels = nx.get_edge_attributes(G, 'weight')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=12, label_pos=0.3)
+plt.title("Directed Graph Representation", fontsize=15)
+plt.axis('off') 
+plt.show()
