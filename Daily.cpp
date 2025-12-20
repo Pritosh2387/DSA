@@ -568,4 +568,7 @@ string addBinary(string a, string b){
     reverse(ans.begin(),ans.end());
     return ans;
 }
-//1365
+//944
+int minDeletionSize(vector<string>& strs) {
+            
+}
