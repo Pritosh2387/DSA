@@ -78,7 +78,7 @@ int divide(int dividend, int divisor) {
 }
 vector<int> single_no_3(vector<int>&a){
     int n = a.size();
-    int sum = 0;
+    long long sum = 0;
     for(int it : a){
         sum^=it;
     }
