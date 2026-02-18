@@ -1,202 +1,283 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-int unboundedknapsack_r(vector<int>&wt,vector<int>&val,int i,int w){
-    if(i==0){
-        if(wt[0]<=w){
-            int u = w/wt[0];
-            return val[0]*u;
-        }else{
+int unboundedknapsack_r(vector<int> &wt, vector<int> &val, int i, int w)
+{
+    if (i == 0)
+    {
+        if (wt[0] <= w)
+        {
+            int u = w / wt[0];
+            return val[0] * u;
+        }
+        else
+        {
             return 0;
         }
     }
-    int notpick = unboundedknapsack_r(wt,val,i-1,w);
+    int notpick = unboundedknapsack_r(wt, val, i - 1, w);
     int pick = INT_MIN;
-    if(wt[i]<=w){
-        pick = val[i]+unboundedknapsack_r(wt,val,i,w-wt[i]);
+    if (wt[i] <= w)
+    {
+        pick = val[i] + unboundedknapsack_r(wt, val, i, w - wt[i]);
     }
-    return max(pick,notpick);
+    return max(pick, notpick);
 }
-int unboundedknapsack_m(vector<int>&wt,vector<int>&val,int i,int w,vector<vector<int>>&dp){
-    if(i==0){
-        if(wt[0]<=w){
-            int u = w/wt[0];
-            return val[0]*u;
-        }else{
+int unboundedknapsack_m(vector<int> &wt, vector<int> &val, int i, int w, vector<vector<int>> &dp)
+{
+    if (i == 0)
+    {
+        if (wt[0] <= w)
+        {
+            int u = w / wt[0];
+            return val[0] * u;
+        }
+        else
+        {
             return 0;
         }
     }
-    if(dp[i][w]!=-1)return dp[i][w];
-    int notpick = unboundedknapsack_m(wt,val,i-1,w,dp);
+    if (dp[i][w] != -1)
+        return dp[i][w];
+    int notpick = unboundedknapsack_m(wt, val, i - 1, w, dp);
     int pick = INT_MIN;
-    if(wt[i]<=w){
-        pick = val[i]+unboundedknapsack_m(wt,val,i,w-wt[i],dp);
+    if (wt[i] <= w)
+    {
+        pick = val[i] + unboundedknapsack_m(wt, val, i, w - wt[i], dp);
     }
-    return dp[i][w]=max(pick,notpick);
+    return dp[i][w] = max(pick, notpick);
 }
-int unboundedknapsack_t(vector<int>&wt,vector<int>&val,int w){
+int unboundedknapsack_t(vector<int> &wt, vector<int> &val, int w)
+{
     int n = wt.size();
-    vector<vector<int>>dp(n,vector<int>(w+1,0));
-    for(int i = 0 ; i <= w ; i++){
-        if (wt[0] <= i){
+    vector<vector<int>> dp(n, vector<int>(w + 1, 0));
+    for (int i = 0; i <= w; i++)
+    {
+        if (wt[0] <= i)
+        {
             int cnt = i / wt[0];
-            dp[0][i] = cnt* val[0];
+            dp[0][i] = cnt * val[0];
         }
     }
-    for(int i = 1 ; i < n ; i++){
-        for(int j = 0 ; j <= w ; j++){        
-            int notpick = dp[i-1][j];
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j <= w; j++)
+        {
+            int notpick = dp[i - 1][j];
             int pick = INT_MIN;
-            if(wt[i]<=j){
-                pick = val[i]+dp[i][j-wt[i]];
+            if (wt[i] <= j)
+            {
+                pick = val[i] + dp[i][j - wt[i]];
             }
-            dp[i][j]=max(pick,notpick);
+            dp[i][j] = max(pick, notpick);
         }
     }
-    return dp[n-1][w];
+    return dp[n - 1][w];
 }
-int longestCommonSubsequence_r(string &text1, string &text2,int i,int j){
-    if(i==-1 || j==-1)return 0;
-    if(text1[i]==text2[j]){
-        return 1 + longestCommonSubsequence_r(text1,text2,i-1,j-1);
+int longestCommonSubsequence_r(string &text1, string &text2, int i, int j)
+{
+    if (i == -1 || j == -1)
+        return 0;
+    if (text1[i] == text2[j])
+    {
+        return 1 + longestCommonSubsequence_r(text1, text2, i - 1, j - 1);
     }
-    return max(longestCommonSubsequence_r(text1,text2,i-1,j),longestCommonSubsequence_r(text1,text2,i,j-1));
+    return max(longestCommonSubsequence_r(text1, text2, i - 1, j), longestCommonSubsequence_r(text1, text2, i, j - 1));
 }
-int longestCommonSubsequence_m(string &text1, string &text2,int i,int j,vector<vector<int>>&dp){
-    if(i==-1 || j==-1)return 0;
-    if(dp[i][j]!=-1){
+int longestCommonSubsequence_m(string &text1, string &text2, int i, int j, vector<vector<int>> &dp)
+{
+    if (i == -1 || j == -1)
+        return 0;
+    if (dp[i][j] != -1)
+    {
         return dp[i][j];
     }
-    if(text1[i]==text2[j]){
-        return dp[i][j]=1 + longestCommonSubsequence_m(text1,text2,i-1,j-1,dp);
+    if (text1[i] == text2[j])
+    {
+        return dp[i][j] = 1 + longestCommonSubsequence_m(text1, text2, i - 1, j - 1, dp);
     }
-    return dp[i][j]=max(longestCommonSubsequence_m(text1,text2,i-1,j,dp),longestCommonSubsequence_m(text1,text2,i,j-1,dp));
+    return dp[i][j] = max(longestCommonSubsequence_m(text1, text2, i - 1, j, dp), longestCommonSubsequence_m(text1, text2, i, j - 1, dp));
 }
-int longestCommonSubsequence_t(string &text1, string &text2){
-    int n = text1.length(),m=text2.length();
-    vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
-    for(int i = 0 ; i <= n ; i++){
+int longestCommonSubsequence_t(string &text1, string &text2)
+{
+    int n = text1.length(), m = text2.length();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
+    for (int i = 0; i <= n; i++)
+    {
         dp[i][0] = 0;
     }
-    for(int j = 0 ; j <= m ; j++){
-        dp[0][j]= 0;
+    for (int j = 0; j <= m; j++)
+    {
+        dp[0][j] = 0;
     }
-    for(int i = 1 ; i <= n ; i++){
-        for(int j = 1 ; j <= m ; j++){
-            if(text1[i-1]==text2[j-1]){
-                dp[i][j]=1 + dp[i-1][j-1];
-            }else{
-                dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (text1[i - 1] == text2[j - 1])
+            {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            }
+            else
+            {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
             }
         }
     }
     return dp[n][m];
 }
-int longestCommonSubsequence(string &text1, string &text2){
-    int n = text1.length(),m=text2.length();
-    vector<int>prev(m+1, 0);
-    for(int i = 1 ; i <= n ; i++){
-        vector<int>curr(m+1, 0);
-        for(int j = 1 ; j <= m ; j++){
-            if(text1[i-1]==text2[j-1]){
-                curr[j]=1 + prev[j-1];
-            }else{
-                curr[j]=max(prev[j],curr[j-1]);
+int longestCommonSubsequence(string &text1, string &text2)
+{
+    int n = text1.length(), m = text2.length();
+    vector<int> prev(m + 1, 0);
+    for (int i = 1; i <= n; i++)
+    {
+        vector<int> curr(m + 1, 0);
+        for (int j = 1; j <= m; j++)
+        {
+            if (text1[i - 1] == text2[j - 1])
+            {
+                curr[j] = 1 + prev[j - 1];
+            }
+            else
+            {
+                curr[j] = max(prev[j], curr[j - 1]);
             }
         }
         prev = curr;
     }
     return prev[m];
 }
-int longestCommonSubstring(string &text1, string &text2){
+int longestCommonSubstring(string &text1, string &text2)
+{
     int ans = 0;
-    int n = text1.length(),m=text2.length();
-    vector<int>prev(m+1, 0);
-    for(int i = 1 ; i <= n ; i++){
-        vector<int>curr(m+1, 0);
-        for(int j = 1 ; j <= m ; j++){
-            if(text1[i-1]==text2[j-1]){
-                curr[j]=1 + prev[j-1];
-                ans = max(curr[j],ans);
-            }else{
-                curr[j]=0;
+    int n = text1.length(), m = text2.length();
+    vector<int> prev(m + 1, 0);
+    for (int i = 1; i <= n; i++)
+    {
+        vector<int> curr(m + 1, 0);
+        for (int j = 1; j <= m; j++)
+        {
+            if (text1[i - 1] == text2[j - 1])
+            {
+                curr[j] = 1 + prev[j - 1];
+                ans = max(curr[j], ans);
+            }
+            else
+            {
+                curr[j] = 0;
             }
         }
         prev = curr;
     }
     return ans;
 }
-int minDistance_r(string word1,string word2,int i,int j){
-    if(i==-1)return j+1;
-    if(j==-1)return i+1;
-    if(word1[i]==word2[j]){
-        return minDistance_r(word1,word2,i-1,j-1);
+int minDistance_r(string word1, string word2, int i, int j)
+{
+    if (i == -1)
+        return j + 1;
+    if (j == -1)
+        return i + 1;
+    if (word1[i] == word2[j])
+    {
+        return minDistance_r(word1, word2, i - 1, j - 1);
     }
-    return 1 + min(minDistance_r(word1,word2,i-1,j),min(minDistance_r(word1,word2,i-1,j-1),minDistance_r(word1,word2,i,j-1)));
+    return 1 + min(minDistance_r(word1, word2, i - 1, j), min(minDistance_r(word1, word2, i - 1, j - 1), minDistance_r(word1, word2, i, j - 1)));
 }
-int minDistance_m(string word1,string word2,int i,int j,vector<vector<int>>&dp){
-    if(i==-1)return j+1;
-    if(j==-1)return i+1;
-    if(dp[i][j]!=-1){
+int minDistance_m(string word1, string word2, int i, int j, vector<vector<int>> &dp)
+{
+    if (i == -1)
+        return j + 1;
+    if (j == -1)
+        return i + 1;
+    if (dp[i][j] != -1)
+    {
         return dp[i][j];
     }
-    if(word1[i]==word2[j]){
-        return dp[i][j]=minDistance_m(word1,word2,i-1,j-1,dp);
+    if (word1[i] == word2[j])
+    {
+        return dp[i][j] = minDistance_m(word1, word2, i - 1, j - 1, dp);
     }
-    return dp[i][j]=1 + min(minDistance_m(word1,word2,i-1,j,dp),min(minDistance_m(word1,word2,i-1,j-1,dp),minDistance_m(word1,word2,i,j-1,dp)));
+    return dp[i][j] = 1 + min(minDistance_m(word1, word2, i - 1, j, dp), min(minDistance_m(word1, word2, i - 1, j - 1, dp), minDistance_m(word1, word2, i, j - 1, dp)));
 }
-int numDistinct_r(string s,string t,int i,int j){
-    if(j<0)return 1;
-    if(i<0)return 0;
-    if(s[i]==t[j]){
-        return numDistinct_r(s,t,i-1,j-1) + numDistinct_r(s,t,i-1,j);
-    }else{
-        return numDistinct_r(s,t,i-1,j);
+int numDistinct_r(string s, string t, int i, int j)
+{
+    if (j < 0)
+        return 1;
+    if (i < 0)
+        return 0;
+    if (s[i] == t[j])
+    {
+        return numDistinct_r(s, t, i - 1, j - 1) + numDistinct_r(s, t, i - 1, j);
+    }
+    else
+    {
+        return numDistinct_r(s, t, i - 1, j);
     }
 }
-int numDistinct_m(string s,string t,int i,int j,vector<vector<int>>&dp){
+int numDistinct_m(string s, string t, int i, int j, vector<vector<int>> &dp)
+{
     int n = s.length();
     int m = t.length();
-    if(j<0)return 1;
-    if(i<0)return 0;
-    if(dp[i][j]!=-1){
+    if (j < 0)
+        return 1;
+    if (i < 0)
+        return 0;
+    if (dp[i][j] != -1)
+    {
         return dp[i][j];
     }
-    if(s[i]==t[j]){
-        return dp[i][j] = numDistinct_m(s,t,i-1,j-1,dp) + numDistinct_m(s,t,i-1,j,dp);
-    }else{
-        return dp[i][j] = numDistinct_m(s,t,i-1,j,dp);
+    if (s[i] == t[j])
+    {
+        return dp[i][j] = numDistinct_m(s, t, i - 1, j - 1, dp) + numDistinct_m(s, t, i - 1, j, dp);
+    }
+    else
+    {
+        return dp[i][j] = numDistinct_m(s, t, i - 1, j, dp);
     }
 }
-int numDistinct_t(string s,string t){
+int numDistinct_t(string s, string t)
+{
     int n = s.length();
     int m = t.length();
-    vector<vector<double>> dp(n+1, vector<double>(m+1, 0));
-    for(int i = 0 ; i <= n ; i++){
+    vector<vector<double>> dp(n + 1, vector<double>(m + 1, 0));
+    for (int i = 0; i <= n; i++)
+    {
         dp[i][0] = 1;
     }
-    for(int i = 1 ; i <= n ; i++){
-        for(int j = 1 ; j <= m ; j++){
-            if(s[i-1]==t[j-1]){
-                dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
-            }else{
-                dp[i][j] = dp[i-1][j];
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (s[i - 1] == t[j - 1])
+            {
+                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+            }
+            else
+            {
+                dp[i][j] = dp[i - 1][j];
             }
         }
     }
     return dp[n][m];
 }
-int numDistinct_2so(string s,string t){
+int numDistinct_2so(string s, string t)
+{
     int n = s.length();
     int m = t.length();
-    vector<double>prev(m+1, 0);
+    vector<double> prev(m + 1, 0);
     prev[0] = 1;
-    for(int i = 1 ; i <= n ; i++){
-        vector<double>curr(m+1, 0);
-        curr[0]=1;
-        for(int j = 1 ; j <= m ; j++){
-            if(s[i-1]==t[j-1]){
-                curr[j] = prev[j-1] + prev[j];
-            }else{
+    for (int i = 1; i <= n; i++)
+    {
+        vector<double> curr(m + 1, 0);
+        curr[0] = 1;
+        for (int j = 1; j <= m; j++)
+        {
+            if (s[i - 1] == t[j - 1])
+            {
+                curr[j] = prev[j - 1] + prev[j];
+            }
+            else
+            {
                 curr[j] = prev[j];
             }
         }
@@ -204,19 +285,167 @@ int numDistinct_2so(string s,string t){
     }
     return (int)prev[m];
 }
-int numDistinct(string s,string t){
+int numDistinct(string s, string t)
+{
     int n = s.length();
     int m = t.length();
-    vector<double>prev(m+1, 0);
+    vector<double> prev(m + 1, 0);
     prev[0] = 1;
-    for(int i = 1 ; i <= n ; i++){
-        for(int j = m ; j >= 1 ; j--){
-            if(s[i-1]==t[j-1]){
-                prev[j] = prev[j-1] + prev[j];
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = m; j >= 1; j--)
+        {
+            if (s[i - 1] == t[j - 1])
+            {
+                prev[j] = prev[j - 1] + prev[j];
             }
         }
     }
     return (int)prev[m];
+}
+bool isMatch_r(string &s, string &p, int i, int j)
+{
+    // both exhausted
+    if (i < 0 && j < 0)
+        return true;
+
+    // pattern exhausted but string left
+    if (j < 0 && i >= 0)
+        return false;
+
+    // string exhausted but pattern left
+    if (i < 0 && j >= 0)
+    {
+        for (int k = 0; k <= j; k++)
+        {
+            if (p[k] != '*')
+                return false;
+        }
+        return true;
+    }
+
+    if (p[j] == s[i] || p[j] == '?')
+        return isMatch_r(s, p, i - 1, j - 1);
+
+    if (p[j] == '*')
+        return isMatch_r(s, p, i - 1, j)     // match one char
+               || isMatch_r(s, p, i, j - 1); // match empty
+
+    return false;
+}
+
+bool isMatch_m(string s, string p, int i, int j, vector<vector<bool>> &dp)
+{
+    if (i < 0 && j < 0)
+        return true;
+    if (j < 0 && i >= 0)
+        return false;
+    if (i < 0 && j >= 0)
+    {
+        for (int k = 0; k <= j; k++)
+        {
+            if (p[k] != '*')
+                return false;
+        }
+        return true;
+    }
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    if (p[j] == s[i] || p[j] == '?')
+        return dp[i][j] = isMatch_m(s, p, i - 1, j - 1, dp);
+    if (p[j] == '*')
+        return dp[i][j] =
+                   isMatch_m(s, p, i - 1, j, dp) || isMatch_m(s, p, i, j - 1, dp);
+    return dp[i][j] = false;
+}
+class Solution
+{
+public:
+    bool isMatch(string s, string p)
+    {
+        int n = s.size();
+        int m = p.size();
+
+        vector<vector<bool>> dp(n + 1, vector<bool>(m + 1, false));
+
+        // both empty
+        dp[0][0] = true;
+
+        // pattern vs empty string
+        for (int j = 1; j <= m; j++)
+        {
+            if (p[j - 1] == '*')
+                dp[0][j] = dp[0][j - 1];
+        }
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= m; j++)
+            {
+
+                if (p[j - 1] == s[i - 1] || p[j - 1] == '?')
+                {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+
+                else if (p[j - 1] == '*')
+                {
+                    dp[i][j] = dp[i - 1][j]     // match one char
+                               || dp[i][j - 1]; // match empty
+                }
+
+                else
+                {
+                    dp[i][j] = false;
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
+};
+bool isMatch(string s, string p)
+{
+    int n = s.size();
+    int m = p.size();
+
+    vector<bool> prev(m + 1, false), curr(m + 1, false);
+
+    prev[0] = true;
+
+    for (int j = 1; j <= m; j++)
+    {
+        if (p[j - 1] == '*')
+            prev[j] = prev[j - 1];
+    }
+
+    for (int i = 1; i <= n; i++)
+    {
+        curr[0] = false;
+
+        for (int j = 1; j <= m; j++)
+        {
+
+            if (p[j - 1] == s[i - 1] || p[j - 1] == '?')
+            {
+                curr[j] = prev[j - 1];
+            }
+
+            else if (p[j - 1] == '*')
+            {
+                curr[j] = prev[j] || curr[j - 1];
+            }
+
+            else
+            {
+                curr[j] = false;
+            }
+        }
+
+        prev = curr;
+    }
+
+    return prev[m];
 }
 int main(){
     return 0;
