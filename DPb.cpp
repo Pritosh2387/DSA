@@ -167,7 +167,7 @@ int numDistinct_m(string s,string t,int i,int j,vector<vector<int>>&dp){
         return dp[i][j] = numDistinct_m(s,t,i-1,j,dp);
     }
 }
-int numDistinct_t(string s,string t,int i,int j){
+int numDistinct_t(string s,string t){
     int n = s.length();
     int m = t.length();
     vector<vector<double>> dp(n+1, vector<double>(m+1, 0));
@@ -185,7 +185,7 @@ int numDistinct_t(string s,string t,int i,int j){
     }
     return dp[n][m];
 }
-int numDistinct_2so(string s,string t,int i,int j){
+int numDistinct_2so(string s,string t){
     int n = s.length();
     int m = t.length();
     vector<double>prev(m+1, 0);
@@ -204,7 +204,7 @@ int numDistinct_2so(string s,string t,int i,int j){
     }
     return (int)prev[m];
 }
-int numDistinct(string s,string t,int i,int j){
+int numDistinct(string s,string t){
     int n = s.length();
     int m = t.length();
     vector<double>prev(m+1, 0);
