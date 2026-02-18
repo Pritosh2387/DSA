@@ -125,6 +125,99 @@ int longestCommonSubstring(string &text1, string &text2){
     }
     return ans;
 }
+int minDistance_r(string word1,string word2,int i,int j){
+    if(i==-1)return j+1;
+    if(j==-1)return i+1;
+    if(word1[i]==word2[j]){
+        return minDistance_r(word1,word2,i-1,j-1);
+    }
+    return 1 + min(minDistance_r(word1,word2,i-1,j),min(minDistance_r(word1,word2,i-1,j-1),minDistance_r(word1,word2,i,j-1)));
+}
+int minDistance_m(string word1,string word2,int i,int j,vector<vector<int>>&dp){
+    if(i==-1)return j+1;
+    if(j==-1)return i+1;
+    if(dp[i][j]!=-1){
+        return dp[i][j];
+    }
+    if(word1[i]==word2[j]){
+        return dp[i][j]=minDistance_m(word1,word2,i-1,j-1,dp);
+    }
+    return dp[i][j]=1 + min(minDistance_m(word1,word2,i-1,j,dp),min(minDistance_m(word1,word2,i-1,j-1,dp),minDistance_m(word1,word2,i,j-1,dp)));
+}
+int numDistinct_r(string s,string t,int i,int j){
+    if(j<0)return 1;
+    if(i<0)return 0;
+    if(s[i]==t[j]){
+        return numDistinct_r(s,t,i-1,j-1) + numDistinct_r(s,t,i-1,j);
+    }else{
+        return numDistinct_r(s,t,i-1,j);
+    }
+}
+int numDistinct_m(string s,string t,int i,int j,vector<vector<int>>&dp){
+    int n = s.length();
+    int m = t.length();
+    if(j<0)return 1;
+    if(i<0)return 0;
+    if(dp[i][j]!=-1){
+        return dp[i][j];
+    }
+    if(s[i]==t[j]){
+        return dp[i][j] = numDistinct_m(s,t,i-1,j-1,dp) + numDistinct_m(s,t,i-1,j,dp);
+    }else{
+        return dp[i][j] = numDistinct_m(s,t,i-1,j,dp);
+    }
+}
+int numDistinct_t(string s,string t,int i,int j){
+    int n = s.length();
+    int m = t.length();
+    vector<vector<double>> dp(n+1, vector<double>(m+1, 0));
+    for(int i = 0 ; i <= n ; i++){
+        dp[i][0] = 1;
+    }
+    for(int i = 1 ; i <= n ; i++){
+        for(int j = 1 ; j <= m ; j++){
+            if(s[i-1]==t[j-1]){
+                dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+            }else{
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+    return dp[n][m];
+}
+int numDistinct_2so(string s,string t,int i,int j){
+    int n = s.length();
+    int m = t.length();
+    vector<double>prev(m+1, 0);
+    prev[0] = 1;
+    for(int i = 1 ; i <= n ; i++){
+        vector<double>curr(m+1, 0);
+        curr[0]=1;
+        for(int j = 1 ; j <= m ; j++){
+            if(s[i-1]==t[j-1]){
+                curr[j] = prev[j-1] + prev[j];
+            }else{
+                curr[j] = prev[j];
+            }
+        }
+        prev = curr;
+    }
+    return (int)prev[m];
+}
+int numDistinct(string s,string t,int i,int j){
+    int n = s.length();
+    int m = t.length();
+    vector<double>prev(m+1, 0);
+    prev[0] = 1;
+    for(int i = 1 ; i <= n ; i++){
+        for(int j = m ; j >= 1 ; j--){
+            if(s[i-1]==t[j-1]){
+                prev[j] = prev[j-1] + prev[j];
+            }
+        }
+    }
+    return (int)prev[m];
+}
 int main(){
     return 0;
 }
