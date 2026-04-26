@@ -63,7 +63,7 @@ long long flowerGame(int n,int m){
     return (xodd*yeven)+(yodd*xeven);
 }
 //1304
-vector<int>sumZero(int n){
+vector<int>sumZero(int n){zzzzz
     vector<int>ans;
     int num = - n/2;
     if( n % 2 == 1 ){
