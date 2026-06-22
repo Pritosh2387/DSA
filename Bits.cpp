@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+using ll = long long;
 void swap_no(int&a,int&b){
     a = a^b;
     b = a^b;//a
