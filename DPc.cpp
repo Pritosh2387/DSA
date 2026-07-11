@@ -196,6 +196,33 @@ int lengthOfLIS(vector<int>& nums){
     }; 
     return memo(memo,0,-1);
 }
+vector<int> printlcs(vector<int>&nums){
+    int n = nums.size();
+    vector<int>dp(n,1),hash(n);
+    int maxlen = 1;
+    int maxind = 0;
+    for(int i = 0 ; i < n ; i++){
+        hash[i] = i;
+        for(int j = 0 ; j < i ; j++){
+            if(nums[i] > nums[j] && dp[i] < 1+ dp[j]){
+                dp[i] = 1 + dp[j];
+                hash[i] = j;
+            }
+        }
+        if(dp[i]>maxlen){
+            maxlen = dp[i];
+            maxind = i;
+        }
+    }
+    vector<int>ans;
+    while(hash[maxind] != maxind){
+        ans.push_back(nums[maxind]);
+        maxind = hash[maxind];
+    }
+    ans.push_back(nums[maxind]);
+    reverse(ans,begin(),ans.end());
+    return ans;
+}
 int main(){
     return 0;
 }
