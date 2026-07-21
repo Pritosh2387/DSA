@@ -365,7 +365,7 @@ int krushal_algo(int v , vector<vector<vector<int>>>&adj){
             int node = i;
             int adjnode = adj[i][j][0];
             int wt = adj[i][j][1];
-            edges.emplace_back(wt,make_pair(node,adjnode));
+            edges.push_back({wt,{node,adjnode}});
         }
     }
     sort(edges.begin(),edges.end());
