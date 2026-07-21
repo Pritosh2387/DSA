@@ -348,7 +348,6 @@ public:
         u = find_par(u);
         v = find_par(v);
         if (u == v) return;
-
         if (size[u] < size[v]) {
             parent[u] = v;
             size[v] += size[u];
