@@ -318,8 +318,7 @@ int prims_algo(int n ,vector<vector<vector<int>>>&adj){
 }
 class DSU{
 public:
-    vector<int> rank, parent, 
-    size;
+    vector<int> rank, parent, size;
     DSU(int n){
         rank.resize(n + 1, 0);
         parent.resize(n + 1);
