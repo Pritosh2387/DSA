@@ -622,8 +622,8 @@ void dfs_topo(vector<int>&visi,int node,vector<vector<int>>&adj,stack<int>&st){
         if(!visi[it]){
             dfs_topo(visi,it,adj,st);
         }
-        st.push(node);
     }
+    st.push(node);
 }
 vector<int> topo_sort(int n , vector<vector<int>>adj){
     stack<int>st;
