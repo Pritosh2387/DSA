@@ -797,7 +797,7 @@ vector<int> shortest_distance(vector<vector<int>>&edges,int n){
         int u = edges[i][0];
         int v = edges[i][1];
         int wt = edges[i][2];
-        adj[u].emplace_back(adj[v],wt);
+        adj[u].push_back({v,wt});
     }
     stack<int> st;
     vector<int>visi(n,0);
