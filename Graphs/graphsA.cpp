@@ -514,7 +514,8 @@ bool bipartite(vector<vector<int>>&adj){
     vector<int>visi(n,-1);
     for(int i = 0 ; i < n ; i++){
         if(visi[i]==-1){
-            if(dfs_bipartite(i,0,visi,adj)==false)return false;
+            if(dfs_bipartite(i,0,visi,adj)==false)
+                return false;
         }
     }
     return true;
