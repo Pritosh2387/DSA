@@ -335,7 +335,7 @@ void dfs_landseasII(int row , int col,int baserow,int basecol,vector<pair<int,in
         int nr = row+delrow[i];
         int nc = col + delcol[i];
         if(nr>=0 && nc>=0 && nr< n && nc<m && !visi[nr][nc]&& matrix[nr][nc]){
-            dfs_landseasII(nr,nc,row,col,vec,visi,matrix);
+            dfs_landseasII(nr,nc,baserow,basecol,vec,visi,matrix);
         } 
     }
 }
@@ -346,7 +346,7 @@ int landseas_II(vector<vector<int>>&matrix){
     set<vector<pair<int,int>>> seti;
     for(int i = 0 ; i < n ; i++){
         for(int j = 0 ; j < m ; j++){
-            if(!visi[i][j]){
+            if(!visi[i][j] && matrix[i][j]){
                 vector<pair<int,int>> vec;
                 dfs_landseasII(i,j,i,j,vec,visi,matrix);
                 seti.insert(vec);
