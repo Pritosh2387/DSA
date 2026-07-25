@@ -380,6 +380,7 @@ int krushal_algo(int v , vector<vector<vector<int>>>&adj){
             d1.union_by_size(node,adjnode);
         }
     }
+    return ans;
 }
 int make_connections(int v , vector<vector<int>>&edges){
     if (edges.size() < v - 1)return -1;
