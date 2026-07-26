@@ -72,11 +72,7 @@ bool possible_days_or_not(vector<int>&a,int m,int k,int mid){
         }
     }
     no_of_bouquets_possible+=count/k;
-    if(no_of_bouquets_possible>=m){
-        return true;
-    }else{
-        return false;
-    }
+    return no_of_bouquets_possible >=m;
 }
 int min_days_to_form_m_bouquets(vector<int> &a ,int m , int k){
     if (1LL * m * k > a.size())return -1;
