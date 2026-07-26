@@ -233,6 +233,8 @@ int split_array_largest_sum(vector<int>&a,int k){
 }
 long double  minimise_max_distance_between_gas_stations(vector<int>&a,int k){
     int n = a.size();
+    if (n <= 1)
+        return 0.0;
     priority_queue<pair<long double,int>> pq;
     vector<int> how_many(n-1,0);
     for(int i =0;i<n-1;i++){
