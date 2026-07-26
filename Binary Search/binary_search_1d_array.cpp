@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 int lower_bound_custom(vector<int> &a, int n) {
-    int lp = 0, rp = n-1 , ans = rp + 1;
+    int lp = 0, rp = a.size()-1 , ans = rp + 1;
     while (lp <= rp) {
         int mid = lp + (rp - lp) / 2;
         if (a[mid] >= n) {
