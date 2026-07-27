@@ -9,11 +9,8 @@ void reverse_array(vector<int> &a,int i){
 }
 int fibo(int n){
     if(n==1 || n==2){
-        if(n==1){
-            return 0;
-        }else{
-            return 1;
-        }
+        if(n==1)return 0;
+        return 1;
     }
     return fibo(n-1)+fibo(n-2);
 }
