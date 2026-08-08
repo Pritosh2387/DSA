@@ -1,0 +1,27 @@
+                  GRID
+                    |
+                    v
+          What can I move to?
+                    |
+        ┌───────────┴───────────┐
+        |                       |
+   Fixed direction          4 directions /
+   (→ ↓ etc.)               arbitrary movement
+        |                       |
+        v                       v
+     DAG-like?               GRAPH
+        |                       |
+       YES                      |
+        |                       |
+       DP              ┌────────┼─────────┐
+                       |        |         |
+                   Reach?   Shortest?   Components?
+                       |        |
+                    BFS/DFS    |
+                              weights?
+                                |
+                    ┌───────────┼───────────┐
+                    |           |           |
+                    0         0/1        positive
+                    |           |           |
+                   BFS       0-1 BFS     Dijkstra
