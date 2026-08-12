@@ -137,10 +137,6 @@ int peak_element(vector<int>&a){
     }
     return -1;
 }
-int find_pivot_in_rotated_sorted_array(vector<int>&a){
-    
-    
-} 
 int main(){
     vector<int> a = {5,5,6,7,7,8,8,9,9};
     cout << single_element_in_an_array(a);
