@@ -160,13 +160,13 @@ bool valid_parenthesis(string str){
         return true;
     }
 }
-class data{
+class ata{
 public:
     int strt;
     int end;
     int pos;
 };
-bool comp_N(data d1,data d2){
+bool comp_N(ata &d1,ata &d2){
     if(d1.end<d2.end){
         return true;
     }else{
@@ -175,14 +175,14 @@ bool comp_N(data d1,data d2){
 }
 int N_meeting_in_a_room(vector<int> &st,vector<int>&en){
     int n = st.size();
-    vector<data> data_N(n);
+    vector<ata> data_N(n);
     for(int i = 0 ; i < n ; i++){
         data_N[i].strt=st[i];
         data_N[i].end=en[i];
         data_N[i].pos=i;
     }
     sort(data_N.begin(),data_N.end(),comp_N);
-    queue<data> qe;
+    queue<ata> qe;
     int freetime=data_N[0].end;
     int count=1;
     qe.push(data_N[0]);

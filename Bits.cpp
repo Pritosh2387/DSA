@@ -101,7 +101,6 @@ int XORtillN(int n){
     if(n % 4 == 3)return 0;
     return n;
 }
-
 int main(){
     int a = 8;
     int b = 6;
